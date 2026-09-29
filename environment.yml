@@ -1,0 +1,54 @@
+# Conda-environment voor alle Streamlit-apps van M1 (Python & AI Coding Foundations).
+#
+# Aanmaken (eenmalig, in de map waar dit bestand staat):
+#     conda env create -f environment.yml
+# Activeren (telkens voor je begint te coderen):
+#     conda activate syntra-ds
+# Bijwerken na een wijziging aan dit bestand:
+#     conda env update -f environment.yml --prune
+#
+# Bewust het Anaconda-kanaal 'defaults' en NIET conda-forge: de Windows-bestanden van
+# Anaconda zijn digitaal ondertekend. Smart App Control (standaard aan op nieuwe
+# Windows 11-laptops) blokkeert de niet-ondertekende DLL's van conda-forge, waardoor
+# zelfs 'import pandas' faalt ("An Application Control policy has blocked this file").
+#
+# Dit bestand hoort NIET in de repo van een Streamlit-app: Community Cloud geeft een
+# environment.yml voorrang op requirements.txt.
+
+name: syntra-ds
+channels:
+  - defaults
+dependencies:
+  - python=3.13
+  - pip
+
+  # app & data
+  - streamlit
+  - pandas
+  - numpy
+  - pyarrow              # Parquet lezen/schrijven (treinen-app)
+  - openpyxl             # Excel (.xlsx) inlezen met pandas
+  - requests             # data ophalen via een API
+  - scipy                # curve fitting (CO2-model van de brouwerij-case)
+
+  # grafieken
+  - plotly
+  - matplotlib
+  - altair
+
+  # kaarten (crashes, verkeersongevallen)
+  - folium
+  - geopandas
+  - pyproj               # coördinaten omzetten, bv. Lambert 72 -> GPS
+
+  # testen & werken in VS Code
+  - pytest
+  - ipykernel            # notebooks / interactief venster in VS Code
+  - python-dotenv        # API-sleutels uit een .env-bestand lezen (nooit in git)
+
+  # geen Python, wel nodig: MCP-servers starten met npx
+  - nodejs
+
+  # niet beschikbaar bij Anaconda; puur Python, dus geen DLL's
+  - pip:
+      - streamlit-folium
